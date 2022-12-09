@@ -10,24 +10,16 @@ public class CameraController : MonoBehaviour
     private float looker;
     public float sensitivity = 5;
 
-    [SerializeField] float minFov = 15f;
-    [SerializeField] float maxFov = 60f;
-    [SerializeField] float sensitivityM = 10f;
+    [SerializeField] private float minFov = 15f;
+    [SerializeField] private float maxFov = 60f;
+    [SerializeField] private float sensitivityM = 10f;
 
-
-
-    void Update()
+    private void Update()
     {
-
         float fov = Camera.main.fieldOfView;
         fov -= Input.GetAxis("Mouse ScrollWheel") * sensitivityM;
         fov = Mathf.Clamp(fov, minFov, maxFov);
         Camera.main.fieldOfView = fov;
-
-
-
-
-
 
         CharacterController controller = GetComponent<CharacterController>();
         // is the controller on the ground?
@@ -40,19 +32,16 @@ public class CameraController : MonoBehaviour
             //Multiply it by speed.
             moveDirection *= speed;
             //Jumping
-            if (Input.GetButton("Jump"))
-                moveDirection.y = jumpSpeed;
-
+            //if (Input.GetButton("Jump"))
+            //    moveDirection.y = jumpSpeed;
         }
         turner = Input.GetAxis("Mouse X") * sensitivity;
         looker = -Input.GetAxis("Mouse Y") * sensitivity;
 
         if (Input.GetKey(KeyCode.Mouse1))
         {
-
             //Code for action on mouse moving right
             transform.eulerAngles += new Vector3(0, turner, 0);
-
         }
         /* if (Input.GetKey(KeyCode.Mouse2))
         {
