@@ -10,17 +10,8 @@ public class CameraController : MonoBehaviour
     private float looker;
     public float sensitivity = 5;
 
-    [SerializeField] private float minFov = 15f;
-    [SerializeField] private float maxFov = 60f;
-    [SerializeField] private float sensitivityM = 10f;
-
     private void Update()
     {
-        float fov = Camera.main.fieldOfView;
-        fov -= Input.GetAxis("Mouse ScrollWheel") * sensitivityM;
-        fov = Mathf.Clamp(fov, minFov, maxFov);
-        Camera.main.fieldOfView = fov;
-
         CharacterController controller = GetComponent<CharacterController>();
         // is the controller on the ground?
         if (controller)
@@ -31,9 +22,6 @@ public class CameraController : MonoBehaviour
             moveDirection = transform.TransformDirection(moveDirection);
             //Multiply it by speed.
             moveDirection *= speed;
-            //Jumping
-            //if (Input.GetButton("Jump"))
-            //    moveDirection.y = jumpSpeed;
         }
         turner = Input.GetAxis("Mouse X") * sensitivity;
         looker = -Input.GetAxis("Mouse Y") * sensitivity;
@@ -43,15 +31,21 @@ public class CameraController : MonoBehaviour
             //Code for action on mouse moving right
             transform.eulerAngles += new Vector3(0, turner, 0);
         }
-        /* if (Input.GetKey(KeyCode.Mouse2))
-        {
-            //Code for action on mouse moving right
-            //transform.eulerAngles += new Vector3(looker, 0, 0);
-        } */
 
         //Applying gravity to the controller
         moveDirection.y -= gravity * Time.deltaTime;
         //Making the character move
         controller.Move(moveDirection * Time.deltaTime);
     }
+
+    // -------------Junk
+    //if (Input.GetKey(KeyCode.Mouse2))
+    //{
+    //    //Code for action on mouse moving right
+    //    transform.eulerAngles += new Vector3(looker, 0, 0);
+    //}
+
+    //Jumping
+    //if (Input.GetButton("Jump"))
+    //    moveDirection.y = jumpSpeed;
 }
